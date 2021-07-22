@@ -1,0 +1,38 @@
+<!-- page start-->
+        <div class="row">
+            <div class="col-sm-12 mail-w3agile">
+                <section class="panel">
+                    <header class="panel-heading wht-bg">
+                       <h4 class="gen-case">All Customers</h4>
+                    </header>
+                    <div class="panel-body minimal">
+                        <div class="table-inbox-wrap ">
+                            <table class="table table-inbox table-hover">
+                            <th>No</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Date</th>
+                        <tbody>
+                        <?php 
+                        $query = "SELECT users.id,users.username,users.email,users.phone,appointments.did,appointments.approval,appointments.date,appointments.uid,doctor.did,doctor.hid FROM ((users INNER JOIN appointments ON users.id=appointments.uid) INNER JOIN doctor ON doctor.hid= '{$_SESSION['h_id']}' AND doctor.did=appointments.did) WHERE appointments.approval= '1' LIMIT 1";
+                        $result = mysqli_query($conn,$query);
+                        while ($row = mysqli_fetch_array($result)) {                        	
+                        ?>
+                        <tr class="">
+                            <td class="inbox-small-cells">1</td>
+                            <td class="view-message dont-show"><?php echo $row['username']?></td>
+                            <td class="view-message dont-show"><?php echo $row['email']?></td>
+                            <td class="view-message dont-show"><?php echo $row['phone']?></td>
+                            <td class="view-message dont-show"><?php echo $row['date']?></td>
+                            <td class="view-message dont-show" id="approve"><a href="appointments.php?type=2&uid=<?php echo $row['uid']?>">View Details</a></td>
+                        </tr>
+                        <?php } ?>
+                        </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <!-- page end-->
